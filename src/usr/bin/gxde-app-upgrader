@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/libexec/gxde-app-upgrader/gxde-do-upgrade.sh "$@"

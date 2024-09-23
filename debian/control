@@ -1,4 +1,4 @@
-Source: gxde-app-upgrade
+Source: gxde-app-upgrader
 Section: utils
 Priority: optional
 Maintainer: shenmo <shenmo@spark-app.store>
@@ -9,7 +9,7 @@ Rules-Requires-Root: no
 #Vcs-Git: https://salsa.debian.org/debian/gxde-app-upgrade.git
 #Vcs-Browser: https://salsa.debian.org/debian/gxde-app-upgrade
 
-Package: gxde-app-upgrade
+Package: gxde-app-upgrader
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends},zenity, bash, libnotify-bin

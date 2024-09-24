@@ -52,13 +52,13 @@ echo ${app_name_in_desktop}
 touch /tmp/gxde-app-upgrader/upgradeStatus.txt
 
 # 执行 apt update
-pkexec ${HERE}/gxde-do-upgrade-worker.sh ssupdate | zenity --progress --auto-close --pulsate --no-cancel --text="${TRANSHELL_CONTENT_UPDATE_CHEKING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
+pkexec ${HERE}/gxde-do-upgrade-worker.sh update | zenity --progress --auto-close --pulsate --no-cancel --text="${TRANSHELL_CONTENT_UPDATE_CHEKING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
 
-if [ -z `cat /tmp/gxde-app-ssupdate-status.txt` ] ; then
+if [ -z `cat /tmp/gxde-app-update-status.txt` ] ; then
 	${HERE}/gxde-do-upgrade-worker.sh clean-log
 else
 	zenity --error --text "${TRANSHELL_CONTENT_CHECK_UPDATE_PROCESS_ERROR_PRESS_CONFIRM_TO_CHECK}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 200 --width 350 
-	zenity --text-info --filename=/tmp/gxde-app-ssupdate-log.txt --checkbox="${TRANSHELL_CONTENT_I_ALREDY_COPIED_THE_LOG_HERE_AND_WILL_USE_IT_TO_FEEDBACK}" --title="${TRANSHELL_CONTENT_FEEDBACK_CAN_BE_FOUND_IN_THE_SETTINGS}" 
+	zenity --text-info --filename=/tmp/gxde-app-update-log.txt --checkbox="${TRANSHELL_CONTENT_I_ALREDY_COPIED_THE_LOG_HERE_AND_WILL_USE_IT_TO_FEEDBACK}" --title="${TRANSHELL_CONTENT_FEEDBACK_CAN_BE_FOUND_IN_THE_SETTINGS}" 
 	${HERE}/gxde-do-upgrade-worker.sh clean-log
     rm -f /tmp/gxde-app-upgrader/upgradeStatus.txt
 	exit

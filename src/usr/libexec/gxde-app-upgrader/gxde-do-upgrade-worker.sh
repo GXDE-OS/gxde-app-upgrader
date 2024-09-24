@@ -83,6 +83,6 @@ fi
 	
 	clean-log)
 
-	rm -f /tmp/gxde-app-ssupdate-status.txt /tmp/gxde-app-ssupdate-log.txt /tmp/gxde-app-upgrade-log.txt /tmp/gxde-app-upgrade-status.txt
+	rm -f /tmp/gxde-app-update-status.txt /tmp/gxde-app-update-log.txt /tmp/gxde-app-upgrade-log.txt /tmp/gxde-app-upgrade-status.txt
 	;;
 esac

@@ -21,7 +21,7 @@ fi
 	;;
 
 	upgradable-list)
-		output=$(env LANGUAGE=en_US /usr/bin/apt  -c /opt/durapps/spark-store/bin/apt-fast-conf/aptss-apt.conf list --upgradable | awk NR\>1)
+		output=$(env LANGUAGE=en_US ${APT_CMD} list --upgradable | awk NR\>1)
 
 		IFS_OLD="$IFS"
 		IFS=$'\n'

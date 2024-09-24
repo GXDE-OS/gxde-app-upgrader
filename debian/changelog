@@ -1,6 +1,5 @@
-gxde-app-upgrader (1.0.0) UNRELEASED; urgency=low
+gxde-app-upgrader (1.0.1) UNRELEASED; urgency=low
 
-  * Initial release. Closes: #nnnn
-    <nnnn is the bug number of your ITP>
+  * fix: translate problem
 
  -- shenmo <shenmo@spark-app.store>  Tue, 24 Sep 2024 00:58:49 +0800

@@ -1,7 +1,7 @@
 #!/bin/bash
 export LANGUAGE=en_US
 HERE=$(dirname $0)
-source ${HERE}/bashimport/transhell.amber
+source /opt/bashimport/transhell.sh
 load_transhell_debug
 
 #############################################################

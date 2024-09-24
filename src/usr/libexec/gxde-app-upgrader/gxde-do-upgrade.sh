@@ -6,7 +6,7 @@ fi
 HERE=$(dirname $0)
 mkdir /tmp/gxde-app-upgrader
 trap "rm -f  /tmp/gxde-app-upgrader/upgradeStatus.txt" EXIT
-source ${HERE}/bashimport/transhell.amber
+source /opt/bashimport/transhell.sh
 load_transhell_debug
 
 function get_name_from_desktop_file() {

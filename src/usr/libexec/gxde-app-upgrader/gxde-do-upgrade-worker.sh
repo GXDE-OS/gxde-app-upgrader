@@ -21,6 +21,10 @@ fi
 	;;
 
 	upgradable-list)
+if [ "$(id -u)" != "0" ] ; then
+	pkexec "$0" "$@"
+	exit
+fi
 		output=$(env LANGUAGE=en_US ${APT_CMD} list --upgradable | awk NR\>1)
 
 		IFS_OLD="$IFS"

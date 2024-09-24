@@ -90,12 +90,13 @@ for line in $PKG_LIST ; do
     PKG_NEW_VER=$(echo $line | awk -F ' ' '{print $2}')
     PKG_CUR_VER=$(echo $line | awk -F ' ' '{print $3}')
 
-    dpkg --compare-versions $PKG_NEW_VER le $PKG_CUR_VER
+#     dpkg --compare-versions $PKG_NEW_VER le $PKG_CUR_VER
 
-    if [ $? -eq 0 ] ; then
-        let update_app_number=$update_app_number-1
-        continue
-    fi
+#     if [ $? -eq 0 ] ; then
+#         let update_app_number=$update_app_number-1
+#         continue
+#     fi
+# 版本相同也要更新
 
     ## 检测是否是 hold 状态
     PKG_STA=$(dpkg-query -W -f='${db:Status-Want}' $PKG_NAME)

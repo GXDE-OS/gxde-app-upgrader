@@ -80,10 +80,11 @@ else
 	PKG_NEW_VER=$(echo $line | awk -F ' ' '{print $2}')
 	PKG_CUR_VER=$(echo $line | awk -F ' ' '{print $3}')
 
-	dpkg --compare-versions $PKG_NEW_VER le $PKG_CUR_VER
-	if [ $? -eq 0 ] ; then
-		continue
-	fi
+# 	dpkg --compare-versions $PKG_NEW_VER le $PKG_CUR_VER
+# 	if [ $? -eq 0 ] ; then
+# 		continue
+# 	fi
+# 版本号相同也更新
 	APP_NAME=$(get_name_from_desktop_file $PKG_NAME)
 	#### 检测是否是 hold 状态
 	PKG_STA=$(dpkg-query -W -f='${db:Status-Want}' $PKG_NAME)

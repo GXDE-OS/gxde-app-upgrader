@@ -1,0 +1,9 @@
+[Unit]  
+Description=Timer for GXDE update notifier
+  
+[Timer]  
+OnBootSec=1min
+OnUnitActiveSec=1d  
+  
+[Install]  
+WantedBy=timers.target

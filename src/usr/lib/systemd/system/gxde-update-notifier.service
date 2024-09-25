@@ -1,0 +1,14 @@
+[Unit]
+Description=GXDE update notifier
+After=apt-daily.service network.target network-online.target systemd-networkd.service NetworkManager.service connman.service
+
+
+[Service]
+Type=simple
+RemainAfterExit=yes 
+ExecStart=/usr/libexec/gxde-app-upgrader/gxde-update-notifier.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

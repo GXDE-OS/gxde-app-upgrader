@@ -1,5 +1,6 @@
-gxde-app-upgrader (1.0.1) UNRELEASED; urgency=low
+gxde-app-upgrader (1.1.0) UNRELEASED; urgency=low
 
-  * fix: translate problem
+  * feat: support close notify ( by simply touch $HOME/.config/deepin/disable-gxde-update-notifier
+  * Auto start when system load
 
  -- shenmo <shenmo@spark-app.store>  Tue, 24 Sep 2024 00:58:49 +0800

@@ -1,5 +1,5 @@
 #!/bin/bash
-export LANGUAGE=en_US
+
 HERE=$(dirname $0)
 source /opt/bashimport/transhell.sh
 load_transhell_debug
@@ -59,12 +59,12 @@ fi
 ${APT_CMD} update
 
 
-updatetext=$(${APT_CMD} update 2>&1)
+updatetext=$(LANGUAGE=en_US ${APT_CMD} update 2>&1)
 
 until [ "`echo $updatetext | grep E: `" = "" ];do
 echo "${TRANSHELL_CONTENT_UPDATE_ERROR_AND_WAIT_15_SEC}"
 sleep 15
-updatetext=`${APT_CMD} update 2>&1`
+updatetext=$(LANGUAGE=en_US ${APT_CMD} update 2>&1)
 
 
 
@@ -113,7 +113,16 @@ fi
 update_transhell
 
 ## 如果都是hold或者版本一致的那就直接退出，否则把剩余的给提醒了
+## 如果不想提示就不提示
+
+user=$(who | awk '{print $1}' | head -n 1)
+if [ -e "/home/$user/.config/deepin/disable-gxde-update-notifier" ];then
+echo "他不想站在世界之巅，好吧"
+echo "Okay he don't want to be at the top of the world, okay"
+exit 
+else
 
 
 notify-send -a gxde-deb-installer "${TRANSHELL_CONTENT_GXDE_UPGRADE_NOTIFY}" "${TRANSHELL_CONTENT_THERE_ARE_APPS_TO_UPGRADE}"
 
+fi

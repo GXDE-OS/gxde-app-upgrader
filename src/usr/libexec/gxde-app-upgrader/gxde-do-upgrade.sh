@@ -52,12 +52,12 @@ echo ${app_name_in_desktop}
 touch /tmp/gxde-app-upgrader/upgradeStatus.txt
 
 # 执行 apt update
-pkexec ${HERE}/gxde-do-upgrade-worker.sh update | zenity --progress --auto-close --pulsate --no-cancel --text="${TRANSHELL_CONTENT_UPDATE_CHEKING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
+pkexec ${HERE}/gxde-do-upgrade-worker.sh update | garma --progress --auto-close --pulsate --no-cancel --text="${TRANSHELL_CONTENT_UPDATE_CHEKING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
 
 if [ -z `cat /tmp/gxde-app-update-status.txt` ] ; then
 	${HERE}/gxde-do-upgrade-worker.sh clean-log
 else
-	zenity --error --text "${TRANSHELL_CONTENT_CHECK_UPDATE_PROCESS_ERROR_PRESS_CONFIRM_TO_CHECK}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 200 --width 350 
+	garma --error --text "${TRANSHELL_CONTENT_CHECK_UPDATE_PROCESS_ERROR_PRESS_CONFIRM_TO_CHECK}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 200 --width 350 
 	zenity --text-info --filename=/tmp/gxde-app-update-log.txt --checkbox="${TRANSHELL_CONTENT_I_ALREDY_COPIED_THE_LOG_HERE_AND_WILL_USE_IT_TO_FEEDBACK}" --title="${TRANSHELL_CONTENT_FEEDBACK_CAN_BE_FOUND_IN_THE_SETTINGS}" 
 	${HERE}/gxde-do-upgrade-worker.sh clean-log
     rm -f /tmp/gxde-app-upgrader/upgradeStatus.txt
@@ -68,7 +68,7 @@ fi
 PKG_LIST="$(${HERE}/gxde-do-upgrade-worker.sh upgradable-list)"
 ## 如果没更新，就弹出不需要更新
 if [ -z "$PKG_LIST" ] ; then
-	zenity --info --text "${TRANSHELL_CONTENT_NO_NEED_TO_UPGRADE}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
+	garma --info --text "${TRANSHELL_CONTENT_NO_NEED_TO_UPGRADE}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
 else
 	## 获取用户选择的要更新的应用
 	### 指定分隔符为 \n
@@ -108,25 +108,25 @@ done)
 
 	## 如果没有应用需要更新，则直接退出
 	if [ -z "$PKG_UPGRADE_LIST" ] ; then
-		zenity --info --text "${TRANSHELL_CONTENT_NO_NEED_TO_UPGRADE}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
+		garma --info --text "${TRANSHELL_CONTENT_NO_NEED_TO_UPGRADE}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
 	else
 		PKG_UPGRADE_LIST=$(echo "$PKG_UPGRADE_LIST" | zenity --list --text="${TRANSHELL_CONTENT_CHOOSE_APP_TO_UPGRADE}" --column="${TRANSHELL_CONTENT_CHOOSE}" --column="${TRANSHELL_CONTENT_APP_NAME}" --column="${TRANSHELL_CONTENT_NEW_VERSION}" --column="${TRANSHELL_CONTENT_UPGRADE_FROM}" --column="${TRANSHELL_CONTENT_PKG_NAME}" --separator=" " --checklist --multiple --print-column=5 --height 350 --width 650 )
 		## 如果没有选择，则直接退出
 		if [ -z "$PKG_UPGRADE_LIST" ] ; then
-			zenity --info --text "${TRANSHELL_CONTENT_NO_APP_IS_CHOSEN}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
+			garma --info --text "${TRANSHELL_CONTENT_NO_APP_IS_CHOSEN}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
 		else
 			### 更新用户选择的应用
 	for PKG_UPGRADE in $PKG_UPGRADE_LIST;do
 			APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
 			update_transhell
-			pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y | zenity --progress --auto-close --no-cancel --pulsate --text="${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
+			pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y | garma --progress --auto-close --no-cancel --pulsate --text="${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
 	done
 			#### 更新成功
 			if [ -z "`cat /tmp/gxde-app-upgrade-status.txt`" ] ; then
-				zenity --info --text "${TRANSHELL_CONTENT_CHOSEN_APP_UPGRADE_FINISHED}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
+				garma --info --text "${TRANSHELL_CONTENT_CHOSEN_APP_UPGRADE_FINISHED}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
 			else
 			#### 更新异常
-				zenity --error --text "${TRANSHELL_CONTENT_APP_UGRADE_PROCESS_ERROR_PRESS_CONFIRM_TO_CHECK}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 200 --width 350 
+				garma --error --text "${TRANSHELL_CONTENT_APP_UGRADE_PROCESS_ERROR_PRESS_CONFIRM_TO_CHECK}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 200 --width 350 
 				zenity --text-info --filename=/tmp/gxde-app-upgrade-log.txt --checkbox="${TRANSHELL_CONTENT_I_ALREDY_COPIED_THE_LOG_HERE_AND_WILL_USE_IT_TO_FEEDBACK}" --title="${TRANSHELL_CONTENT_FEEDBACK_CAN_BE_FOUND_IN_THE_SETTINGS}" 
 			fi
 		fi

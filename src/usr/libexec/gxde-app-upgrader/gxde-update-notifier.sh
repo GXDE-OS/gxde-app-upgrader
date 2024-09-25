@@ -70,6 +70,9 @@ for line in $PKG_LIST; do
     PKG_STA=$(dpkg-query -W -f='${db:Status-Want}' $PKG_NAME)
     if [ "$PKG_STA" = "hold" ]; then
         let update_app_number=$update_app_number-1
+        echo "$PKG_NAME is held. Let number -1"
+    else
+        echo "$PKG_NAME is checked upgradable."
     fi
 done
 

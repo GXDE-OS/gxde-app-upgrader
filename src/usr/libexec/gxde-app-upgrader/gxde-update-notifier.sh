@@ -38,6 +38,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 # 每日更新源文件
+/usr/bin/apt update
 ${APT_CMD} update
 
 updatetext=$(LANGUAGE=en_US ${APT_CMD} update 2>&1)

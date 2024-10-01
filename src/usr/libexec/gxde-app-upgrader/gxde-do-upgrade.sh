@@ -116,11 +116,11 @@ done)
 			garma --info --text "${TRANSHELL_CONTENT_NO_APP_IS_CHOSEN}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
 		else
 			### 更新用户选择的应用
-	for PKG_UPGRADE in $PKG_UPGRADE_LIST;do
-			APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
-			update_transhell
-			pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y | garma --progress --auto-close --no-cancel --pulsate --text="${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
-	done
+#	for PKG_UPGRADE in $PKG_UPGRADE_LIST;do
+#			APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
+#			update_transhell
+			pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE_LIST -y | garma --progress --auto-close --no-cancel --pulsate --text="${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
+#	done
 			#### 更新成功
 			if [ -z "`cat /tmp/gxde-app-upgrade-status.txt`" ] ; then
 				garma --info --text "${TRANSHELL_CONTENT_CHOSEN_APP_UPGRADE_FINISHED}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 

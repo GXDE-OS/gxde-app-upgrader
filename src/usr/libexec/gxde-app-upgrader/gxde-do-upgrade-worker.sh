@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export DEBIAN_FRONTEND=noninteractive
 if [[ $(command -v aptss) ]];then
 APT_CMD=aptss
 else

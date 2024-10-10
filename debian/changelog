@@ -1,4 +1,4 @@
-gxde-app-upgrader (1.1.5) UNRELEASED; urgency=low
+gxde-app-upgrader (1.1.5-1) UNRELEASED; urgency=low
 
   * feat: support close notify ( by simply touch $HOME/.config/deepin/disable-gxde-update-notifier
   * Auto start when system load
@@ -6,5 +6,6 @@ gxde-app-upgrader (1.1.5) UNRELEASED; urgency=low
   * update apt daily
   * Now upgrade all apps in one dialog
   * Feedback upgrade error more ofter
+  * Fix: FILE is mistakenly reported as error
 
  -- shenmo <shenmo@spark-app.store>  Tue, 24 Sep 2024 00:58:49 +0800

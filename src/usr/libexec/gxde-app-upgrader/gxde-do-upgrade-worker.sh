@@ -14,7 +14,7 @@ if [ "$(id -u)" != "0" ] ; then
 	exit
 fi
 		env LANGUAGE=en_US ${APT_CMD} update 2>&1 | tee /tmp/gxde-app-update-log.txt
-		IS_UPDATE_ERROR=`cat /tmp/gxde-app-update-log.txt | grep "E: "`
+		IS_UPDATE_ERROR=`cat /tmp/gxde-app-update-log.txt | grep '^E:'`
 		echo "$IS_UPDATE_ERROR" > /tmp/gxde-app-update-status.txt
 		chmod 777 /tmp/gxde-app-update-status.txt
 		chmod 777 /tmp/gxde-app-update-status.txt
@@ -48,7 +48,7 @@ fi
 
 		env LANGUAGE=en_US ${APT_CMD} install "${@:2}" --only-upgrade  2>&1 | tee /tmp/gxde-app-upgrade-log.txt
 		chmod 777 /tmp/gxde-app-upgrade-log.txt
-		IS_UPGRADE_ERROR=`cat /tmp/gxde-app-upgrade-log.txt | grep "E:"`
+		IS_UPGRADE_ERROR=`cat /tmp/gxde-app-upgrade-log.txt | grep '^E:'`
 		echo "$IS_UPGRADE_ERROR" > /tmp/gxde-app-upgrade-status.txt
 	;;
 	test-install-app)

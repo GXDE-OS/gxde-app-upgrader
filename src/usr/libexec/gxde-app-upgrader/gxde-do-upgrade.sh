@@ -3,6 +3,11 @@ if [ "$(id -u)" != "0" ] ; then
 	pkexec "$0" "$@"
 	exit
 fi
+log.warn() { echo -e "[\e[33mWARN\e[0m]:  \e[1m$*\e[0m"; }
+log.error()  { echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m"; exit 1; }
+log.info() { echo -e "[\e[96mINFO\e[0m]:  \e[1m$*\e[0m"; }
+log.debug()  { echo -e "[\e[32mDEBUG\e[0m]: \e[1m$*\e[0m"; }
+
 HERE=$(dirname $0)
 mkdir /tmp/gxde-app-upgrader
 trap "rm -f  /tmp/gxde-app-upgrader/upgradeStatus.txt" EXIT
@@ -52,7 +57,7 @@ echo ${app_name_in_desktop}
 touch /tmp/gxde-app-upgrader/upgradeStatus.txt
 
 # 执行 apt update
-pkexec ${HERE}/gxde-do-upgrade-worker.sh update | garma --progress --auto-close --pulsate --no-cancel --text="${TRANSHELL_CONTENT_UPDATE_CHEKING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
+pkexec ${HERE}/gxde-do-upgrade-worker.sh update 2>&1 > /dev/null | garma --progress --auto-close --pulsate --no-cancel --text="${TRANSHELL_CONTENT_UPDATE_CHEKING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
 
 if [ -z `cat /tmp/gxde-app-update-status.txt` ] ; then
 	${HERE}/gxde-do-upgrade-worker.sh clean-log
@@ -119,8 +124,17 @@ done)
 #	for PKG_UPGRADE in $PKG_UPGRADE_LIST;do
 #			APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
 #			update_transhell
-			pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE_LIST -y | garma --progress --auto-close --no-cancel --pulsate --text="${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}" --height 70 --width 400 --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" 
-#	done
+
+(for PKG_UPGRADE in $PKG_UPGRADE_LIST; do
+    APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
+    update_transhell
+
+    # 启动升级任务
+    (pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y 2>&1 > /dev/null ) &
+    # 动态修改zenity的文本
+    echo "# ${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}"
+    wait
+done) | garma --progress --auto-close --no-cancel --pulsate --text="Preparing..." --height 70 --width 400 --title="${TRANSHELL_CONTENT_SPARK_STORE_UPGRADE_MODEL}"
 			#### 更新成功
 			if [ -z "`cat /tmp/gxde-app-upgrade-status.txt`" ] ; then
 				garma --info --text "${TRANSHELL_CONTENT_CHOSEN_APP_UPGRADE_FINISHED}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 

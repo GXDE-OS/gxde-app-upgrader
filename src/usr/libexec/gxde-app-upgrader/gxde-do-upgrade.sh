@@ -4,7 +4,7 @@ if [ "$(id -u)" != "0" ] ; then
 	exit
 fi
 log.warn() { echo -e "[\e[33mWARN\e[0m]:  \e[1m$*\e[0m"; }
-log.error()  { echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m"; exit 1; }
+log.error()  { echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m"; }
 log.info() { echo -e "[\e[96mINFO\e[0m]:  \e[1m$*\e[0m"; }
 log.debug()  { echo -e "[\e[32mDEBUG\e[0m]: \e[1m$*\e[0m"; }
 

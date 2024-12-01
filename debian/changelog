@@ -1,4 +1,4 @@
-gxde-app-upgrader (1.2.4) UNRELEASED; urgency=low
+gxde-app-upgrader (1.2.4-1) UNRELEASED; urgency=low
 
   * feat: support close notify ( by simply touch $HOME/.config/deepin/disable-gxde-update-notifier
   * Auto start when system load

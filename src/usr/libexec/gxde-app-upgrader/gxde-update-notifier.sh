@@ -86,7 +86,7 @@ until [ -z "$(echo $updatetext | grep 'E: ')" ]; do
 done
 
 # 获取可升级包的数量
-update_app_number=$(${APT_CMD} list --upgradable 2>/dev/null | grep -c upgradable)
+update_app_number=$(LANG=en_US.UTF8 LANGUAGE=en_US ${APT_CMD} list --upgradable 2>/dev/null | grep -c upgradable)
 
 if [ "$update_app_number" -le 0 ]; then
     exit 0
@@ -128,7 +128,7 @@ update_transhell
 
 # 检查用户是否禁用通知
 user=$(who | awk '{print $1}' | head -n 1)
-if [ -e "/home/$user/.config/deepin/disable-gxde-update-notifier" ]; then
+if [ -e "/home/$user/.config/GXDE/disable-gxde-update-notifier" ]; then
     echo "User has disabled upgrade notifications."
     echo "User doesn't want to be at the top of the world."
     exit 0

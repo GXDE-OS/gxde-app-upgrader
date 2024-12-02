@@ -134,5 +134,5 @@ if [ -e "/home/$user/.config/GXDE/disable-gxde-update-notifier" ]; then
     exit 0
 else
     # 发送升级通知
-    notify-send -a gxde-deb-installer "${TRANSHELL_CONTENT_GXDE_UPGRADE_NOTIFY}" "${TRANSHELL_CONTENT_THERE_ARE_APPS_TO_UPGRADE}"
+    notify-send -a gxde-deb-installer "${TRANSHELL_CONTENT_GXDE_UPGRADE_NOTIFY}" "${TRANSHELL_CONTENT_THERE_ARE_APPS_TO_UPGRADE}" || true # Some machine don't have bus, or who command just print nothing.
 fi

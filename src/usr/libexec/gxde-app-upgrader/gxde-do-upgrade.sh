@@ -118,8 +118,17 @@ done)
 		garma --info --text "${TRANSHELL_CONTENT_NO_NEED_TO_UPGRADE}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
         exit 0
 	fi
+            # 计算可升级应用的数量
+        PKG_COUNT=$(echo "$PKG_UPGRADE_LIST" | wc -l)
+
+        # 如果可升级应用超过 10 个，弹出警告
+        if [ "$PKG_COUNT" -gt 10 ]; then
+            garma --warning --text "${TRANSHELL_CONTENT_MANY_UPGRADES_WAIT}" --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 &
+            # 等待用户确认列表加载完毕
+        fi
+
     while true;do
-		PKG_UPGRADE_LIST=$(echo "$PKG_UPGRADE_LIST" | zenity --list --text="${TRANSHELL_CONTENT_CHOOSE_APP_TO_UPGRADE}" --column="${TRANSHELL_CONTENT_CHOOSE}" --column="${TRANSHELL_CONTENT_APP_NAME}" --column="${TRANSHELL_CONTENT_NEW_VERSION}" --column="${TRANSHELL_CONTENT_UPGRADE_FROM}" --column="${TRANSHELL_CONTENT_PKG_NAME}" --separator=" " --checklist --multiple --print-column=5 --height 350 --width 650 )
+		PKG_UPGRADE_LIST=$(echo "$PKG_UPGRADE_LIST" | garma --list --text="${TRANSHELL_CONTENT_CHOOSE_APP_TO_UPGRADE}" --column="${TRANSHELL_CONTENT_CHOOSE}" --column="${TRANSHELL_CONTENT_APP_NAME}" --column="${TRANSHELL_CONTENT_NEW_VERSION}" --column="${TRANSHELL_CONTENT_UPGRADE_FROM}" --column="${TRANSHELL_CONTENT_PKG_NAME}" --separator=" " --checklist --multiple --print-column=5 --height 350 --width 650 )
 		## 如果没有选择，则直接退出
 		if [ -z "$PKG_UPGRADE_LIST" ] ; then
 			garma --info --text "${TRANSHELL_CONTENT_NO_APP_IS_CHOSEN}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 

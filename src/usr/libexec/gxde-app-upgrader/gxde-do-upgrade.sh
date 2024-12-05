@@ -74,7 +74,9 @@ PKG_LIST="$(${HERE}/gxde-do-upgrade-worker.sh upgradable-list)"
 ## 如果没更新，就弹出不需要更新
 if [ -z "$PKG_LIST" ] ; then
 	garma --info --text "${TRANSHELL_CONTENT_NO_NEED_TO_UPGRADE}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
-else
+    exit
+fi
+
 	## 获取用户选择的要更新的应用
 	### 指定分隔符为 \n
 	IFS_OLD="$IFS"
@@ -114,12 +116,21 @@ done)
 	## 如果没有应用需要更新，则直接退出
 	if [ -z "$PKG_UPGRADE_LIST" ] ; then
 		garma --info --text "${TRANSHELL_CONTENT_NO_NEED_TO_UPGRADE}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
-	else
+        exit 0
+	fi
+    while true;do
 		PKG_UPGRADE_LIST=$(echo "$PKG_UPGRADE_LIST" | zenity --list --text="${TRANSHELL_CONTENT_CHOOSE_APP_TO_UPGRADE}" --column="${TRANSHELL_CONTENT_CHOOSE}" --column="${TRANSHELL_CONTENT_APP_NAME}" --column="${TRANSHELL_CONTENT_NEW_VERSION}" --column="${TRANSHELL_CONTENT_UPGRADE_FROM}" --column="${TRANSHELL_CONTENT_PKG_NAME}" --separator=" " --checklist --multiple --print-column=5 --height 350 --width 650 )
 		## 如果没有选择，则直接退出
 		if [ -z "$PKG_UPGRADE_LIST" ] ; then
 			garma --info --text "${TRANSHELL_CONTENT_NO_APP_IS_CHOSEN}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 
-		else
+             exit 0
+		fi
+        if [[ "$PKG_UPGRADE_LIST" == *"(null)"* ]]; then
+            garma --error --text "${TRANSHELL_CONTENT_LIST_NOT_LOADED_PLEASE_WAIT}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300
+        else
+            break
+        fi
+done
 			### 更新用户选择的应用
 #	for PKG_UPGRADE in $PKG_UPGRADE_LIST;do
 #			APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
@@ -143,7 +154,5 @@ done) | garma --progress --auto-close --no-cancel --pulsate --text="Preparing...
 				garma --error --text "${TRANSHELL_CONTENT_APP_UGRADE_PROCESS_ERROR_PRESS_CONFIRM_TO_CHECK}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 200 --width 350 
 				zenity --text-info --filename=/tmp/gxde-app-upgrade-log.txt --checkbox="${TRANSHELL_CONTENT_I_ALREDY_COPIED_THE_LOG_HERE_AND_WILL_USE_IT_TO_FEEDBACK}" --title="${TRANSHELL_CONTENT_FEEDBACK_CAN_BE_FOUND_IN_THE_SETTINGS}" 
 			fi
-		fi
-	fi
-fi
+
 

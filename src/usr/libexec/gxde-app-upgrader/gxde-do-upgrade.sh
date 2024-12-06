@@ -77,9 +77,9 @@ if [ -z "$PKG_LIST" ] ; then
     exit
 fi
             # 计算可升级应用的数量
-        PKG_COUNT=$(echo "$PKG_LIST" | awk '{print NF}' )
+        PKG_COUNT=$(echo "$PKG_LIST" | wc -l )
 
-        # 如果可升级应用超过 10 个，弹出警告
+        # 如果可升级应用超过 20 个，弹出警告
         if [ "$PKG_COUNT" -gt 20 ]; then
             	garma --warning --text "${TRANSHELL_CONTENT_MANY_UPGRADES_WAIT}" --title="${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 --timeout=5 &
             # 等待用户确认列表加载完毕

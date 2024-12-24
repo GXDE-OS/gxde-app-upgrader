@@ -150,7 +150,7 @@ done
     update_transhell
 
     # 启动升级任务
-    (pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y 2>&1 > /dev/null ) &
+    (yes | pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y 2>&1 > /dev/null ) &
     # 动态修改zenity的文本
     echo "# ${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}"
     wait

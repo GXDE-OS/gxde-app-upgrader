@@ -1,4 +1,4 @@
-gxde-app-upgrader (1.2.7) UNRELEASED; urgency=low
+gxde-app-upgrader (1.3.0) UNRELEASED; urgency=low
 
   * feat: support close notify ( by simply touch $HOME/.config/deepin/disable-gxde-update-notifier
   * Auto start when system load
@@ -11,5 +11,6 @@ gxde-app-upgrader (1.2.7) UNRELEASED; urgency=low
   * Enhance: Now support display the package that is upgrading
   * adjust: Change update policy to avoid DDoS attack to server
   * adjust: Now notify users that their list is not complete
+  * adjust: Now use yes to auto confirm
 
  -- shenmo <shenmo@spark-app.store>  Tue, 24 Sep 2024 00:58:49 +0800

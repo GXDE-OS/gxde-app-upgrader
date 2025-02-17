@@ -24,8 +24,9 @@ function get_name_from_desktop_file() {
 if [ "$(grep -m 1 '^NoDisplay=' "$desktop_file_path" | cut -d '=' -f 2)" = "true" ] ||  [ "$(grep -m 1 '^NoDisplay=' "$desktop_file_path" | cut -d '=' -f 2)" = "True" ];then
 	continue
 	else 
-	name_orig=$(grep -m 1 '^Name=' "$desktop_file_path" | cut -d '=' -f 2)
-    name_i18n=$(grep -m 1 "^Name\[${LANGUAGE}\]\=" "$desktop_file_path" | cut -d '=' -f 2)
+name_orig=$(awk -F= '/^\[Desktop Entry\]$/ {found=1} found && /^Name=/ {print $2; exit} /^\[.*\]$/ && !/\[Desktop Entry\]/ {exit}' "$desktop_file_path")
+
+name_i18n=$(awk -v lang="Name[$LANGUAGE]" -F= '/^\[Desktop Entry\]$/ {found=1} found && /^Name\[/ && $1 == lang {print $2; exit} /^\[.*\]$/ && !/\[Desktop Entry\]/ {exit}' "$desktop_file_path")
 		if [ -z "$name_i18n" ] ;then
 		app_name_in_desktop=$name_orig
 		else

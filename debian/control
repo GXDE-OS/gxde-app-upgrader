@@ -12,7 +12,7 @@ Rules-Requires-Root: no
 Package: gxde-app-upgrader
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends},zenity, garma,bash, libnotify-bin,transhell
-Recommends: spark-store | aptss
+Depends: ${misc:Depends},zenity,bash, libnotify-bin,transhell
+Recommends: spark-store | aptss, garma
 Description: GXDE App Upgrader
 

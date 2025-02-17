@@ -13,7 +13,14 @@ mkdir /tmp/gxde-app-upgrader
 trap "rm -f  /tmp/gxde-app-upgrader/upgradeStatus.txt" EXIT
 source /opt/bashimport/transhell.sh
 load_transhell_debug
+function garma(){
+    if [[ -e /usr/bin/garma ]]; then
+        garma "$@"
+    else
+        $(command -v zenity) "$@"
+    fi
 
+}
 function get_name_from_desktop_file() {
 	local app_name_in_desktop
 	local name_orig

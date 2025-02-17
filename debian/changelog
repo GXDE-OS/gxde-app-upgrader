@@ -1,4 +1,4 @@
-gxde-app-upgrader (1.4.0) UNRELEASED; urgency=low
+gxde-app-upgrader (1.4.1) UNRELEASED; urgency=low
 
   * feat: support close notify ( by simply touch $HOME/.config/deepin/disable-gxde-update-notifier
   * Auto start when system load
@@ -13,5 +13,6 @@ gxde-app-upgrader (1.4.0) UNRELEASED; urgency=low
   * adjust: Now notify users that their list is not complete
   * adjust: Now use yes to auto confirm
   * fix: wrong app name displayed when checking app upgrade
+  * Support deepin 25
 
  -- shenmo <shenmo@spark-app.store>  Tue, 24 Sep 2024 00:58:49 +0800

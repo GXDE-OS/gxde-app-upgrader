@@ -4,7 +4,7 @@
 <policyconfig>
     <vendor>gxde-app-upgrader</vendor>
     <icon_name>x-package-repository</icon_name>
-    <action id="top.gxde.gxde-app-upgrader">
+    <action id="org.gxde.gxde-app-upgrader">
         <description>运行gxde-app-upgrader需要权限</description>
         <message>要使用gxde-app-upgrader需要权限</message>
         <defaults>

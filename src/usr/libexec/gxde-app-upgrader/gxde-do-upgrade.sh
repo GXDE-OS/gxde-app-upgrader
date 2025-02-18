@@ -153,16 +153,28 @@ done
 #			APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
 #			update_transhell
 
-(for PKG_UPGRADE in $PKG_UPGRADE_LIST; do
+(
+total=$(echo "$PKG_UPGRADE_LIST" | wc -w)
+count=0
+
+for PKG_UPGRADE in $PKG_UPGRADE_LIST; do
+    count=$((count + 1))
     APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
     update_transhell
 
     # 启动升级任务
     (yes | pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y 2>&1 > /dev/null ) &
+    
+    # 计算进度百分比
+    progress=$(( count * 100 / total ))
+    
     # 动态修改zenity的文本
     echo "# ${TRANSHELL_CONTENT_UPGRADING_PLEASE_WAIT}"
+    echo "$progress"
     wait
-done) | garma --progress --auto-close --no-cancel --pulsate --text="Preparing..." --height 70 --width 400 --title="${TRANSHELL_CONTENT_SPARK_STORE_UPGRADE_MODEL}"
+done
+) | garma --progress --auto-close --no-cancel --text="Preparing..." --height 70 --width 400 --title="${TRANSHELL_CONTENT_SPARK_STORE_UPGRADE_MODEL}"
+
 			#### 更新成功
 			if [ -z "`cat /tmp/gxde-app-upgrade-status.txt`" ] ; then
 				garma --info --text "${TRANSHELL_CONTENT_CHOSEN_APP_UPGRADE_FINISHED}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 150 --width 300 

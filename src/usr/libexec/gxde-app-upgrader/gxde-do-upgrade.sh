@@ -15,7 +15,7 @@ source /opt/bashimport/transhell.sh
 load_transhell_debug
 function garma(){
     if [[ -e /usr/bin/garma ]]; then
-        garma "$@"
+        /usr/bin/garma "$@"
     else
         $(command -v zenity) "$@"
     fi

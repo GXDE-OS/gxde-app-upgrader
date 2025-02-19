@@ -156,7 +156,7 @@ done
 (
 total=$(echo "$PKG_UPGRADE_LIST" | wc -w)
 count=0
-
+echo "1" # 先打开百分比显示
 for PKG_UPGRADE in $PKG_UPGRADE_LIST; do
     count=$((count + 1))
     APP_UPGRADE="$(get_name_from_desktop_file $PKG_UPGRADE)"
@@ -164,7 +164,7 @@ for PKG_UPGRADE in $PKG_UPGRADE_LIST; do
 
     # 启动升级任务
     (yes | pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y 2>&1 > /dev/null ) &
-    echo "1" # 先打开百分比显示
+
     # 计算进度百分比
     progress=$(( count * 100 / total ))
     

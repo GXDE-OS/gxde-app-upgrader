@@ -1,5 +1,7 @@
 #!/bin/bash
+xhost +
 if [ "$(id -u)" != "0" ] ; then
+	xhost +
 	pkexec "$0" "$@"
 	exit
 fi

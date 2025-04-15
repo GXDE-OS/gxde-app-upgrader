@@ -1,3 +1,10 @@
+gxde-app-upgrader (1.6.0) UNRELEASED; urgency=low
+
+  * feat: support wayland
+
+ -- shenmo <shenmo@spark-app.store>  Tue, 24 Sep 2024 00:58:49 +0800
+
+
 gxde-app-upgrader (1.5.2) UNRELEASED; urgency=low
 
   * feat: support close notify ( by simply touch $HOME/.config/deepin/disable-gxde-update-notifier

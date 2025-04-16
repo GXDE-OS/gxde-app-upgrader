@@ -46,7 +46,7 @@ if [ "$(id -u)" != "0" ] ; then
 	exit
 fi
 
-		env LANGUAGE=en_US ${APT_CMD} install "${@:2}" --only-upgrade  2>&1 | tee /tmp/gxde-app-upgrade-log.txt
+		env LANGUAGE=en_US DEBIAN_FRONTEND=noninteractive ${APT_CMD} install "${@:2}" --only-upgrade  2>&1 | tee /tmp/gxde-app-upgrade-log.txt
 		chmod 777 /tmp/gxde-app-upgrade-log.txt
 		IS_UPGRADE_ERROR=`cat /tmp/gxde-app-upgrade-log.txt | grep '^E:'`
 		echo "$IS_UPGRADE_ERROR" > /tmp/gxde-app-upgrade-status.txt

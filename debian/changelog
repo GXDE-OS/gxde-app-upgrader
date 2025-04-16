@@ -1,6 +1,7 @@
-gxde-app-upgrader (1.6.0) UNRELEASED; urgency=low
+gxde-app-upgrader (1.6.1) UNRELEASED; urgency=low
 
   * feat: support wayland
+  * yes n to upgrade
 
  -- shenmo <shenmo@spark-app.store>  Tue, 24 Sep 2024 00:58:49 +0800
 

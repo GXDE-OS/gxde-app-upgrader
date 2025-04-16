@@ -165,7 +165,7 @@ for PKG_UPGRADE in $PKG_UPGRADE_LIST; do
     update_transhell
 
     # 启动升级任务
-    (yes n | pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -y 2>&1 > /dev/null ) &
+    (yes n | pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -yqq 2>&1 > /dev/null ) &
 
     # 计算进度百分比
     progress=$(( count * 100 / total - 1))

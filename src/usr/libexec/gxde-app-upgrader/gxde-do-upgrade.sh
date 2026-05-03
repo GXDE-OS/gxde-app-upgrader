@@ -165,7 +165,7 @@ for PKG_UPGRADE in $PKG_UPGRADE_LIST; do
     update_transhell
 
     # 启动升级任务
-    (yes n | pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app $PKG_UPGRADE -yqq 2>&1 > /dev/null ) &
+    (yes n | pkexec ${HERE}/gxde-do-upgrade-worker.sh upgrade-app "$PKG_UPGRADE" --only-upgrade 2>&1 > /dev/null ) &
 
     # 计算进度百分比
     progress=$(( count * 100 / total - 1))
@@ -185,5 +185,3 @@ done
 				garma --error --text "${TRANSHELL_CONTENT_APP_UGRADE_PROCESS_ERROR_PRESS_CONFIRM_TO_CHECK}" --title "${TRANSHELL_CONTENT_UPGRADE_MODEL}" --height 200 --width 350 
 				zenity --text-info --filename=/tmp/gxde-app-upgrade-log.txt --checkbox="${TRANSHELL_CONTENT_I_ALREDY_COPIED_THE_LOG_HERE_AND_WILL_USE_IT_TO_FEEDBACK}" --title="${TRANSHELL_CONTENT_FEEDBACK_CAN_BE_FOUND_IN_THE_SETTINGS}" 
 			fi
-
-

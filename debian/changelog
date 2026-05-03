@@ -1,11 +1,12 @@
-gxde-app-upgrader (1.6.3) UNRELEASED; urgency=low
+gxde-app-upgrader (1.6.4) UNRELEASED; urgency=low
 
   * feat: support wayland
   * yes n to upgrade
   * 现在不再仅限于升级包
   * 为更新 worker 增加免验证提权和 --only-upgrade 参数校验
+  * 改为批量下载到 apt cache 后再统一安装
 
- -- shenmo <shenmo@spark-app.store>  Sun, 03 May 2026 23:29:15 +0800
+ -- shenmo <shenmo@spark-app.store>  Mon, 04 May 2026 01:35:53 +0800
 
 
 gxde-app-upgrader (1.5.2) UNRELEASED; urgency=low

@@ -21,7 +21,7 @@ fi
 }
 
 validate_upgrade_args() {
-PACKAGE_NAME=""
+PACKAGE_NAMES=()
 ONLY_UPGRADE=""
 
 while [ "$#" -gt 0 ]; do
@@ -34,18 +34,14 @@ while [ "$#" -gt 0 ]; do
 			exit 2
 			;;
 		*)
-			if [ -n "$PACKAGE_NAME" ]; then
-				echo "Only one package can be upgraded at a time" >&2
-				exit 2
-			fi
 			validate_package "$1"
-			PACKAGE_NAME="$1"
+			PACKAGE_NAMES+=("$1")
 			;;
 	esac
 	shift
 done
 
-if [ -z "$PACKAGE_NAME" ]; then
+if [ "${#PACKAGE_NAMES[@]}" -eq 0 ]; then
 	echo "Missing package name" >&2
 	exit 2
 fi
@@ -54,6 +50,35 @@ if [ -z "$ONLY_UPGRADE" ]; then
 	echo "Missing required --only-upgrade option" >&2
 	exit 2
 fi
+}
+
+write_upgrade_status() {
+if [ -f /tmp/gxde-app-upgrade-log.txt ]; then
+	grep '^E:' /tmp/gxde-app-upgrade-log.txt > /tmp/gxde-app-upgrade-status.txt || true
+else
+	: > /tmp/gxde-app-upgrade-status.txt
+fi
+}
+
+download_to_cache() {
+env LANGUAGE=en_US DEBIAN_FRONTEND=noninteractive ${APT_CMD} install -d -y --only-upgrade "${PACKAGE_NAMES[@]}" 2>&1 | tr '\r' '\n' | while IFS= read -r line; do
+	printf '%s\n' "$line"
+	speed=$(printf '%s\n' "$line" | sed -n 's/.*DL:\([^ ]*\).*/\1/p')
+	progress=$(printf '%s\n' "$line" | sed -n 's/.*(\([0-9][0-9]*\)%).*/\1/p')
+	if [ -n "$speed" ]; then
+		echo "# Downloading packages... ${speed}"
+	fi
+	if [ -n "$progress" ]; then
+		echo "$((progress * 80 / 100))"
+	fi
+done
+return "${PIPESTATUS[0]}"
+}
+
+install_from_cache() {
+echo "# Installing packages from cache..."
+echo 85
+env LANGUAGE=en_US DEBIAN_FRONTEND=noninteractive ${APT_CMD} install -y --no-download --only-upgrade "${PACKAGE_NAMES[@]}"
 }
 
 
@@ -89,10 +114,24 @@ case $1 in
 		shift
 		validate_upgrade_args "$@"
 
-		env LANGUAGE=en_US DEBIAN_FRONTEND=noninteractive ${APT_CMD} install -y --only-upgrade "$PACKAGE_NAME" 2>&1 | tee /tmp/gxde-app-upgrade-log.txt
+		{
+			download_to_cache
+			download_ret="$?"
+			if [ "$download_ret" -ne 0 ]; then
+				exit "$download_ret"
+			fi
+
+			install_from_cache
+			install_ret="$?"
+			echo 100
+			exit "$install_ret"
+		} 2>&1 | tee /tmp/gxde-app-upgrade-log.txt
+		ret=${PIPESTATUS[0]}
 		chmod 777 /tmp/gxde-app-upgrade-log.txt
-		IS_UPGRADE_ERROR=`cat /tmp/gxde-app-upgrade-log.txt | grep '^E:'`
-		echo "$IS_UPGRADE_ERROR" > /tmp/gxde-app-upgrade-status.txt
+		write_upgrade_status
+		if [ "$ret" -ne 0 ] || [ -s /tmp/gxde-app-upgrade-status.txt ]; then
+			exit 1
+		fi
 	;;
 	test-install-app)
 	run_as_root "$@"

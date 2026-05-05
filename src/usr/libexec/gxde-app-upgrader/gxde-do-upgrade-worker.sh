@@ -6,6 +6,16 @@ else
 APT_CMD=/usr/bin/apt
 fi
 
+APTSS_APT_CONF=/opt/durapps/spark-store/bin/apt-fast-conf/aptss-apt.conf
+
+apt_get_install_from_cache() {
+if [ -f "$APTSS_APT_CONF" ]; then
+	env LANGUAGE=en_US DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get -c "$APTSS_APT_CONF" install -y --no-download --only-upgrade "$@"
+else
+	env LANGUAGE=en_US DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get install -y --no-download --only-upgrade "$@"
+fi
+}
+
 run_as_root() {
 if [ "$(id -u)" != "0" ] ; then
 	pkexec "$0" "$@"
@@ -78,7 +88,7 @@ return "${PIPESTATUS[0]}"
 install_from_cache() {
 echo "# Installing packages from cache..."
 echo 85
-env LANGUAGE=en_US DEBIAN_FRONTEND=noninteractive ${APT_CMD} install -y --no-download --only-upgrade "${PACKAGE_NAMES[@]}"
+apt_get_install_from_cache "${PACKAGE_NAMES[@]}"
 }
 
 

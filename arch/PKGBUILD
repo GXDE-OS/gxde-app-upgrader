@@ -1,0 +1,28 @@
+# Maintainer: CharOfString <root@charofstring.cc>
+pkgname=gxde-app-upgrader-git
+pkgver=1.6.5
+pkgrel=1
+pkgdesc='GXDE application upgrade helper (APT-based)'
+arch=('any')
+url="https://github.com/GXDE-OS/gxde-app-upgrader"
+license=('CC-BY-NC-SA-4.0')
+# 除 debian/control 外，脚本还直接调用 sudo、pkexec、curl ・ Besides debian/control, the scripts call sudo, pkexec and curl.
+depends=('zenity' 'bash' 'libnotify' 'sudo' 'polkit' 'curl' 'transhell-git')
+optdepends=('garma-git: Qt dialogs')
+makedepends=('git')
+provides=('gxde-app-upgrader')
+conflicts=('gxde-app-upgrader')
+source=()
+sha512sums=()
+
+# 直接使用 PKGBUILD 所在的 git 仓库作为源码 ・ Build from the git checkout this PKGBUILD lives in.
+_srcroot() {
+  git -C "$startdir" rev-parse --show-toplevel
+}
+
+package() {
+  # 与 debian/install 相同，src/ 即为安装根目录 ・ Same as debian/install, src/ is the install root.
+  cp -r --no-preserve=ownership "$(_srcroot)/src/." "$pkgdir/"
+  # CC-BY-NC-SA-4.0 不是通用许可证，需随包附带 ・ CC-BY-NC-SA-4.0 is not a common license, ship its text.
+  install -Dm644 "$(_srcroot)/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

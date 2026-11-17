@@ -1,5 +1,5 @@
 # Maintainer: CharOfString <root@charofstring.cc>
-pkgname=gxde-app-upgrader-git
+pkgname=gxde-app-upgrader
 pkgver=1.6.5
 pkgrel=1
 pkgdesc='GXDE application upgrade helper (APT-based)'
@@ -7,11 +7,12 @@ arch=('any')
 url="https://github.com/GXDE-OS/gxde-app-upgrader"
 license=('CC-BY-NC-SA-4.0')
 # 除 debian/control 外，脚本还直接调用 sudo、pkexec、curl ・ Besides debian/control, the scripts call sudo, pkexec and curl.
-depends=('zenity' 'bash' 'libnotify' 'sudo' 'polkit' 'curl' 'transhell-git')
-optdepends=('garma-git: Qt dialogs')
+depends=('zenity' 'bash' 'libnotify' 'sudo' 'polkit' 'curl' 'transhell')
+optdepends=('garma: Qt dialogs')
 makedepends=('git')
-provides=('gxde-app-upgrader')
-conflicts=('gxde-app-upgrader')
+provides=("gxde-app-upgrader-git=$pkgver")
+conflicts=('gxde-app-upgrader-git')
+replaces=('gxde-app-upgrader-git')
 source=()
 sha512sums=()
 
